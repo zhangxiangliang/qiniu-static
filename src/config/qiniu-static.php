@@ -1,11 +1,6 @@
 <?php
 
 return [
-    'cache' => [
-        'img' => true,
-        'css' => true,
-        'js'  => true
-    ],
     'log' => storage_path('logs/qiniu-static.log'),
     'public' => [
         public_path(),
@@ -21,9 +16,4 @@ return [
         'js'  => ['js'],
         'css' => ['css']
     ],
-    'basepath' => [
-        'img' => 'dist/img/',
-        'js'  => 'dist/js/',
-        'css' => 'dist/css/',
-    ]
 ];
