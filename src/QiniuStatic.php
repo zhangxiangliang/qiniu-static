@@ -125,7 +125,8 @@ class QiniuStatic
 
     private function deleteFiles($file)
     {
-        $this->bucketManager->delete($this->bucket, $file->getFilename());
+        $filename = $file->getFilename();
+        $this->bucketManager->delete($this->bucket, $this->addBasePath($filename));
     }
 
     private function extension($file)
