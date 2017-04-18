@@ -1,6 +1,8 @@
 {
     "name": "zhangxiangliang/qiniu-static",
     "description": "auto upload file to qiniu cdn",
+    "license": "WTFPL",
+    "keywords": ["console", "qiniu", "laravel"],
     "authors": [
         {
             "name": "zhangxiangliang",
