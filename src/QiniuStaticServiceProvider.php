@@ -16,6 +16,7 @@ class QiniuStaticServiceProvider extends ServiceProvider
         $this->qiniuStaticCommands();
         $this->qiniuStaticPublishes();
         $this->qiniuStaticHelpers();
+        $this->qiniuStaticCheckConfig();
     }
 
     /**
@@ -50,5 +51,15 @@ class QiniuStaticServiceProvider extends ServiceProvider
     private function qiniuStaticHelpers()
     {
         require __DIR__ . '/helpers.php';
+    }
+
+    private function qiniuStaticCheckConfig()
+    {
+        $qiniu = config('qiniu-static.qiniu');
+        foreach ($qiniu as $key => $value) {
+            if($value == null) {
+                QiniuStatic::output(trans('qiniu-static.warn.qiniu', compact('key')), 'comment');
+            }
+        }
     }
 }

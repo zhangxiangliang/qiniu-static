@@ -111,6 +111,13 @@ class QiniuStatic
         $this->output->writeln($styled);
     }
 
+    public static function output($string, $style)
+    {
+        $output = new ConsoleOutput();
+        $styled = $style ? "<$style>$string</$style>" : $string;
+        $output->writeln($styled);
+    }
+
     private function needUploadOfTime($file)
     {
         return Carbon::createFromTimestamp($file->getATime()) > $this->beforeTime
@@ -154,10 +161,9 @@ class QiniuStatic
 
     private function uploadMessage($err, $path, $name)
     {
-        $data = ['path' => $path, 'name' => $name];
-
-        if($err !== null) $this->line(trans('qiniu-static.error.fail', $data), 'error');
-        else $this->line(trans('qiniu-static.info.success', $data), 'info');
+        return $err !== null
+            ? $this->line(trans('qiniu-static.error.code:' . $err->getResponse()->statusCode), 'error')
+            : $this->line(trans('qiniu-static.info.success', ['path' => $path, 'name' => $name]), 'info');
     }
 
     private function getBeforePushTime()
