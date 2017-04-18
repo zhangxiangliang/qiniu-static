@@ -162,7 +162,7 @@ class QiniuStatic
     private function uploadMessage($err, $path, $name)
     {
         return $err !== null
-            ? $this->line(trans('qiniu-static.error.code:' . $err->getResponse()->statusCode), 'error')
+            ? $this->line(trans('qiniu-static.error.code:' . $err->getResponse()->statusCode, compact('name')), 'error')
             : $this->line(trans('qiniu-static.info.success', ['path' => $path, 'name' => $name]), 'info');
     }
 

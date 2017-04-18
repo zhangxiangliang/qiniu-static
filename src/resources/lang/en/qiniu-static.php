@@ -5,9 +5,9 @@ return [
         'exist' => 'Upload fail, filename is existed',
         'filename' => 'Place input file name',
         'fail' => 'Upload fail, filepath: :path',
-        'code:631' => 'Bucket is error',
-        'code:612' => 'Accesskey is error',
-        'code:401' => 'Token or Secretkey is error',
+        'code:631' => 'Upload fail file name: :name, Bucket is error',
+        'code:612' => 'Upload fail file name: :name, Accesskey is error',
+        'code:401' => 'Upload fail file name: :name, Token or Secretkey is error',
     ],
     'info' => [
         'pushing' => 'Pushing...',
