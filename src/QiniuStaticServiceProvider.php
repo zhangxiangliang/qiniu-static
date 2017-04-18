@@ -56,9 +56,11 @@ class QiniuStaticServiceProvider extends ServiceProvider
     private function qiniuStaticCheckConfig()
     {
         $qiniu = config('qiniu-static.qiniu');
-        foreach ($qiniu as $key => $value) {
-            if($value == null) {
-                QiniuStatic::output(trans('qiniu-static.warn.qiniu', compact('key')), 'comment');
+        if($qiniu) {
+            foreach ($qiniu as $key => $value) {
+                if($value == null) {
+                    QiniuStatic::output(trans('qiniu-static.warn.qiniu', compact('key')), 'comment');
+                }
             }
         }
     }
