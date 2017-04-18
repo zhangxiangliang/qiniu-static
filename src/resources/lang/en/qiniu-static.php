@@ -9,6 +9,10 @@ return [
     ],
     'info' => [
         'pushing' => 'Pushing...',
-        'success' => 'Push success, file path: :path, name: :name'
+        'success' => '==>Push success, file path: :path, name: :name',
+        'directory' => [
+            'start' => '=>traversing :directory',
+            'end' => '=>traversed :directory',
+        ]
     ]
 ];

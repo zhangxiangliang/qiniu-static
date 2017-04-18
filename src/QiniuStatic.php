@@ -9,7 +9,6 @@ use Qiniu\Auth as QiniuAuth;
 use Qiniu\Storage\UploadManager as QiniuUploadManager;
 use Qiniu\Storage\BucketManager as QiniuBucketManager;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Finder\SplFileInfo;
 
 class QiniuStatic
 {
@@ -24,7 +23,7 @@ class QiniuStatic
     private $force;
     private $directories;
     private $bucket;
-    private $extensions = [];
+    private $extensions;
 
     public function __construct($force = false, $basepath = false, $type = 'all',$path = null)
     {
@@ -43,9 +42,9 @@ class QiniuStatic
     public function pushFiles($type)
     {
         foreach ($this->directories as $directory) {
-            foreach(File::allFiles($directory) as $file) {
-                $this->filterFiles($file);
-            }
+            $this->line(trans('qiniu-static.info.directory.start', compact('directory')), 'info');
+            foreach(File::allFiles($directory) as $file) $this->filterFiles($file);
+            $this->line(trans('qiniu-static.info.directory.end', compact('directory')), 'info');
         }
         $this->logPushTime();
     }
@@ -102,7 +101,7 @@ class QiniuStatic
         if(!$this->extension($file)) return;
         if(!$this->needUploadOfTime($file) && !$this->force) return;
 
-        $this->deleteFiles($file->filename);
+        $this->deleteFiles($file->getFilename());
         $this->uploadFiles($file);
     }
 

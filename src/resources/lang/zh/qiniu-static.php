@@ -9,6 +9,10 @@ return [
     ],
     'info' => [
         'pushing' => '正在上传...',
-        'success' => '上传成功, 文件路径: :path, 七牛云文件名: :name'
+        'success' => '==>上传成功, 文件路径: :path, 七牛云文件名: :name',
+        'directory' => [
+            'start' => '=>正在遍历目录 :directory',
+            'end' => '=>结束遍历目录 :directory',
+        ]
     ]
 ];
