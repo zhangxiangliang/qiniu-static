@@ -9,5 +9,10 @@
     ],
     "require": {
         "qiniu/php-sdk": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zhangxiangliang\\QiniuStatic\\": "src/"
+        }
     }
 }
