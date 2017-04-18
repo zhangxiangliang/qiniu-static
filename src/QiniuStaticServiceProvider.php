@@ -15,6 +15,7 @@ class QiniuStaticServiceProvider extends ServiceProvider
     {
         $this->qiniuStaticCommands();
         $this->qiniuStaticPublishes();
+        $this->qiniuStaticHelpers();
     }
 
     /**
@@ -43,5 +44,10 @@ class QiniuStaticServiceProvider extends ServiceProvider
             __DIR__ . '/cache' => base_path('storage/logs/'),
             __DIR__ . '/config/qiniu-static.php' => config_path('qiniu-static.php')
         ]);
+    }
+
+    private function qiniuStaticHelpers()
+    {
+        require __DIR__ . '/helpers.php';
     }
 }
