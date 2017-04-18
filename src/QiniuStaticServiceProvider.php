@@ -42,7 +42,8 @@ class QiniuStaticServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/cache' => base_path('storage/logs/'),
-            __DIR__ . '/config/qiniu-static.php' => config_path('qiniu-static.php')
+            __DIR__ . '/config/qiniu-static.php' => config_path('qiniu-static.php'),
+            __DIR__ . '/resources/lang/' => base_path('resources/lang/'),
         ]);
     }
 

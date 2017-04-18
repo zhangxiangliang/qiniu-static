@@ -32,14 +32,14 @@ class FileCommand extends Command
 
     private function checkArgument()
     {
-        if(!$this->path) return $this->error('place input file path');
-        if(!$this->filename) return $this->error('place input file name');
+        if(!$this->path) return $this->error(trans('qiniu-static.error.path'));
+        if(!$this->filename) return $this->error(trans('qiniu-static.error.filename'));
         return true;
     }
 
     private function push()
     {
-        $this->info("Pushing...");
+        $this->info(trans('qiniu-static.info.pushing'));
         (new QiniuStatic())->pushFile(base_path($this->path), $this->filename);
     }
 }

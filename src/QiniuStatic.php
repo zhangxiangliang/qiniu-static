@@ -52,7 +52,7 @@ class QiniuStatic
     public function pushFile($filepath, $filename)
     {
         if($this->existFile($filename)) {
-            $this->line('Upload fail, filename is existed', 'error');
+            $this->line(trans('qiniu-static.error.exist'), 'error');
             return;
         }
         list($ret, $err) = $this->uploadManager->putFile(
@@ -150,8 +150,10 @@ class QiniuStatic
 
     private function uploadMessage($err, $path, $name)
     {
-        if($err !== null) $this->line('Upload fail, filepath: ' . $path, 'error');
-        else $this->line('Push success, file path: ' . $path . ', name: ' . $name, 'info');
+        $data = ['path' => $path, 'name' => $name];
+
+        if($err !== null) $this->line(trans('qiniu-static.error.fail', $data), 'error');
+        else $this->line(trans('qiniu-static.info.success', $data), 'info');
     }
 
     private function getBeforePushTime()

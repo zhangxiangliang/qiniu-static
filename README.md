@@ -7,7 +7,7 @@
 * 运行 `php artisan vendor:publish` 来加载需要的配置文件。
 
 ## 配置
-配置文件在 `config/qiniu-static.php`，如果找不到该文件请确定是否有执行过 `php artisan vendor:publish`。
+* 配置文件在 `config/qiniu-static.php`，如果找不到该文件请确定是否有执行过 `php artisan vendor:publish`。
 ```
 return [
     'log' => storage_path('logs/qiniu-static.log'), // log 记录最后一次更新的时间
@@ -31,6 +31,7 @@ return [
 ];
 
 ```
+* 支持本地化，根据 `config/app.php` 中的语言进行提示。
 
 ## 使用
 ### 上传文件
