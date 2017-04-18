@@ -12,7 +12,7 @@ class PushCommand extends Command
     protected $basepath = null;
     protected $path = null;
 
-    protected $signature = 'qiniu-static:push {type?} {--path=} {--force} {--basepath=}';
+    protected $signature = 'qiniu-static:push {--type=} {--path=} {--force} {--basepath=}';
     protected $description = 'Push static file to qiniu cdn, type value (all, css, img, js)';
 
     public function __construct()
@@ -22,7 +22,7 @@ class PushCommand extends Command
 
     public function handle()
     {
-        $this->type = $this->argument('type') ? : 'all';
+        $this->type = $this->option('type') ? : 'all';
         $this->force = $this->option('force');
         $this->basepath = $this->option('basepath');
         $this->path = $this->option('path');
@@ -31,7 +31,7 @@ class PushCommand extends Command
 
     private function push()
     {
-        $this->info("Pushing " . $this->type);
+        $this->info("Pushing...");
         (new QiniuStatic($this->basepath, $this->type, $this->force, $this->path))->pushFiles($this->type);
     }
 }
