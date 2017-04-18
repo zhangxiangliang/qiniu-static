@@ -23,7 +23,7 @@ class QiniuStatic
     private $force;
     private $directories;
     private $bucket;
-    private $extension = [];
+    private $extensions = [];
 
     public function __construct($basepath = false, $type = 'all', $force = false, $path = null)
     {
@@ -70,9 +70,7 @@ class QiniuStatic
     {
         $this->logPath = config('qiniu-static.log');
         $this->bucket = config('qiniu-static.qiniu.bucket');
-        $this->extension['img'] = config('qiniu-static.extension.img');
-        $this->extension['js'] = config('qiniu-static.extension.js');
-        $this->extension['css'] = config('qiniu-static.extension.css');
+        $this->extensions = $this->allExtension();
     }
 
     private function initQiniuAuth()
@@ -129,13 +127,23 @@ class QiniuStatic
         $this->bucketManager->delete($this->bucket, $this->addBasePath($filename));
     }
 
+    private function allExtension()
+    {
+        $all = [];
+        $extensions = config('qiniu-static.extension');
+
+        foreach ($extensions as $type) {
+            $all = array_merge($all, $type);
+        }
+
+        return $all;
+    }
+
     private function extension($file)
     {
-        $extension = $this->type == 'all' ? array_merge(
-            $this->extension['img'],
-            $this->extension['js'],
-            $this->extension['css']
-        ) : config('qiniu-static.extension.' . $this->type);
+        $extension = $this->type == 'all'
+            ? $this->extensions
+            : config('qiniu-static.extension.' . $this->type);
 
         return in_array($file->getExtension(), $extension);
     }

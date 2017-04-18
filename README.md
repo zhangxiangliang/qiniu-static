@@ -10,25 +10,24 @@
 配置文件在 `config/qiniu-static.php`，如果找不到该文件请确定是否有执行过 `php artisan vendor:publish`。
 ```
 return [
-    // log 记录最后一次更新的时间
-    'log' => storage_path('logs/qiniu-static.log'),
-    // public 用来设置需要上传的文件目录
+    'log' => storage_path('logs/qiniu-static.log'), // log 记录最后一次更新的时间
+
     'public' => [
         public_path(),
-    ],
-    // qiniu 七牛云的配置，需要根据自己的情况来配置
+    ], // public 用来设置需要上传的文件目录
+
     'qiniu' => [
         'access_key' => env('QN_ACCESS_KEY', ''),
         'secret_key' => env('QN_SECRET_KEY', ''),
         'bucket'     => env('QN_BUCKET', ''),
         'url'        => env('QN_URL', ''),
-    ],
-    // extension 拓展名，用于过滤需要上传的文件（没测过，应该是可以自行添加类型）
+    ], // qiniu 七牛云的配置，需要根据自己的情况来配置
+
     'extension' => [
         'img' => ['bmp','png','gif','jpeg','jpg'],
         'js'  => ['js'],
         'css' => ['css']
-    ],
+    ], // extension 拓展名，用于过滤需要上传的文件，可以自行添加类型。例如 'txt' => ['txt']
 ];
 
 ```
