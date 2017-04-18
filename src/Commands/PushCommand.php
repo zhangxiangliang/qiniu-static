@@ -32,6 +32,6 @@ class PushCommand extends Command
     private function push()
     {
         $this->info(trans('qiniu-static.info.pushing'));
-        (new QiniuStatic($this->basepath, $this->type, $this->force, $this->path))->pushFiles($this->type);
+        (new QiniuStatic($this->force, $this->basepath, $this->type, $this->path))->pushFiles($this->type);
     }
 }

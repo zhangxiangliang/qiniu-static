@@ -9,7 +9,8 @@ class FileCommand extends Command
 {
     protected $pach = null;
     protected $filename = null;
-    protected $signature = 'qiniu-static:file {path?} {filename?}';
+    protected $force = null;
+    protected $signature = 'qiniu-static:file {path?} {filename?} {--force}';
     protected $description = 'Push and rename static file path to qiniu CDN.';
 
     public function __construct()
@@ -28,6 +29,7 @@ class FileCommand extends Command
     {
         $this->path = $this->argument('path');
         $this->filename = $this->argument('filename');
+        $this->force = $this->option('force');
     }
 
     private function checkArgument()
@@ -40,6 +42,6 @@ class FileCommand extends Command
     private function push()
     {
         $this->info(trans('qiniu-static.info.pushing'));
-        (new QiniuStatic())->pushFile(base_path($this->path), $this->filename);
+        (new QiniuStatic($this->force))->pushFile($this->path, $this->filename);
     }
 }

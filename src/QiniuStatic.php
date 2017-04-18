@@ -9,6 +9,7 @@ use Qiniu\Auth as QiniuAuth;
 use Qiniu\Storage\UploadManager as QiniuUploadManager;
 use Qiniu\Storage\BucketManager as QiniuBucketManager;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Finder\SplFileInfo;
 
 class QiniuStatic
 {
@@ -25,7 +26,7 @@ class QiniuStatic
     private $bucket;
     private $extensions = [];
 
-    public function __construct($basepath = false, $type = 'all', $force = false, $path = null)
+    public function __construct($force = false, $basepath = false, $type = 'all',$path = null)
     {
         $this->output = new ConsoleOutput();
         $this->initQiniuAuth();
@@ -51,14 +52,26 @@ class QiniuStatic
 
     public function pushFile($filepath, $filename)
     {
-        if($this->existFile($filename)) {
-            $this->line(trans('qiniu-static.error.exist'), 'error');
-            return;
+        if($this->existFile($filename) && !$this->force) {
+            return $this->line(trans('qiniu-static.error.exist'), 'error');
         }
+
+        if($this->force) $this->deleteFiles($filename);
+
         list($ret, $err) = $this->uploadManager->putFile(
             $this->token, $this->addBasePath($filename), $filepath
         );
+
         $this->uploadMessage($err, $filepath, $this->addBasePath($filename));
+    }
+
+    private function uploadFiles($file)
+    {
+        $filename = $file->getFilename();
+        list($ret, $err) = $this->uploadManager->putFile(
+            $this->token, $this->addBasePath($filename), $file->getRealPath()
+        );
+        $this->uploadMessage($err, $file->getRealPath(), $this->addBasePath($filename));
     }
 
     private function addBasePath($filename)
@@ -89,7 +102,7 @@ class QiniuStatic
         if(!$this->extension($file)) return;
         if(!$this->needUploadOfTime($file) && !$this->force) return;
 
-        $this->deleteFiles($file);
+        $this->deleteFiles($file->filename);
         $this->uploadFiles($file);
     }
 
@@ -112,18 +125,10 @@ class QiniuStatic
         return $this->bucketManager->stat($this->bucket, $filename)[0] ? true : false;
     }
 
-    private function uploadFiles($file)
-    {
-        $filename = $file->getFilename();
-        list($ret, $err) = $this->uploadManager->putFile(
-            $this->token, $this->addBasePath($filename), $file->getRealPath()
-        );
-        $this->uploadMessage($err, $file->getRealPath(), $this->addBasePath($filename));
-    }
 
-    private function deleteFiles($file)
+
+    private function deleteFiles($filename)
     {
-        $filename = $file->getFilename();
         $this->bucketManager->delete($this->bucket, $this->addBasePath($filename));
     }
 
