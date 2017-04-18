@@ -1,0 +1,13 @@
+{
+    "name": "zhangxiangliang/qiniu-static",
+    "description": "auto upload file to qiniu cdn",
+    "authors": [
+        {
+            "name": "zhangxiangliang",
+            "email": "326277403@qq.com"
+        }
+    ],
+    "require": {
+        "qiniu/php-sdk": "^7.1"
+    }
+}
